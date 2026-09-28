@@ -7,9 +7,7 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { PRODUCT_CATEGORIES, useProducts } from "@/lib/data";
 
 export const Route = createFileRoute("/store")({
-  validateSearch: (search: Record<string, unknown>): { q?: string } => ({
-    q: typeof search.q === "string" ? search.q : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } => (typeof search["q"] === "string" ? { q: search["q"] } : {}),
   head: () => ({
     meta: [
       { title: "المتجر — NEXORA" },

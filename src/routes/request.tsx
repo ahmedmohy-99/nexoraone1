@@ -36,7 +36,7 @@ function RequestPage() {
       ad_type: form.adType, size: form.size, details: form.details, notes: form.notes,
     });
     setBusy(false);
-    if (error) return toast.error("تعذّر إرسال الطلب");
+    if (error) { toast.error("تعذّر إرسال الطلب"); return; }
     setSent(true);
   }
 

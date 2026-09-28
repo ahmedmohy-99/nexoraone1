@@ -30,7 +30,7 @@ function ContactPage() {
     setBusy(true);
     const { error } = await supabase.from("messages").insert(form);
     setBusy(false);
-    if (error) return toast.error("تعذّر إرسال الرسالة");
+    if (error) { toast.error("تعذّر إرسال الرسالة"); return; }
     toast.success("تم إرسال رسالتك، سنرد عليك قريباً");
     setForm({ name: "", email: "", phone: "", body: "" });
   }
