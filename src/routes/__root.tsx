@@ -124,24 +124,20 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3943242431032372";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    document.head.appendChild(script);
-  }, []);
-
-  useEffect(() => {
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
       if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
     });
     return () => sub.subscription.unsubscribe();
-  }, [router, queryClient]);
-
-  return (
-    <QueryClientProvider client={queryClient}>
+  }, [router, queryClient]
+return (
+<QueryClientProvider client={queryClient}>
+  <script
+  async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3943242431032372"
+  crossOrigin="anonymous"
+></script>
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">
