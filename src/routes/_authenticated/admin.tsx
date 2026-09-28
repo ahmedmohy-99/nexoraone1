@@ -251,7 +251,7 @@ function Settings() {
   async function save() {
     const rows = Object.entries(form).map(([key, value]) => ({ key, value }));
     const { error } = await supabase.from("site_settings").upsert(rows);
-    if (error) return toast.error("تعذّر الحفظ");
+    if (error) { toast.error("تعذّر الحفظ"); return; }
     qc.invalidateQueries({ queryKey: ["site_settings"] });
     toast.success("تم حفظ الإعدادات");
   }

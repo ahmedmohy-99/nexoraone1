@@ -54,11 +54,11 @@ export function CrudTable({
       const v = editing[f.key];
       payload[f.key] = f.type === "number" ? (v === "" || v == null ? null : Number(v)) : (v ?? "");
     }
-    const id = editing.id as string | undefined;
+    const id = editing["id"] as string | undefined;
     const { error } = id
       ? await supabase.from(table).update(payload as never).eq("id", id)
       : await supabase.from(table).insert(payload as never);
-    if (error) return toast.error("تعذّر الحفظ: " + error.message);
+    if (error) { toast.error("تعذّر الحفظ: " + error.message); return; }
     toast.success("تم الحفظ");
     setEditing(null);
     refresh();
@@ -67,7 +67,7 @@ export function CrudTable({
   async function remove(id: string) {
     if (!confirm("هل تريد الحذف؟")) return;
     const { error } = await supabase.from(table).delete().eq("id", id);
-    if (error) return toast.error("تعذّر الحذف");
+    if (error) { toast.error("تعذّر الحذف"); return; }
     toast.success("تم الحذف");
     refresh();
   }
@@ -77,7 +77,7 @@ export function CrudTable({
     const path = `${table}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "")}`;
     const { error } = await supabase.storage.from("media").upload(path, file);
     setUploading(false);
-    if (error) return toast.error("تعذّر رفع الصورة");
+    if (error) { toast.error("تعذّر رفع الصورة"); return; }
     const { data } = supabase.storage.from("media").getPublicUrl(path);
     setEditing((e) => ({ ...(e ?? {}), [key]: data.publicUrl }));
   }
@@ -91,7 +91,7 @@ export function CrudTable({
         {(list.data ?? []).map((row) => {
           const img = fields.find((f) => f.type === "image");
           return (
-            <div key={row.id as string} className="glass flex items-center gap-4 rounded-2xl p-3">
+            <div key={row["id"] as string} className="glass flex items-center gap-4 rounded-2xl p-3">
               {img && row[img.key] ? (
                 <img src={row[img.key] as string} alt="" className="size-14 rounded-xl object-cover" />
               ) : null}
@@ -99,7 +99,7 @@ export function CrudTable({
               <Button size="icon" variant="ghost" onClick={() => setEditing(row)}>
                 <Pencil />
               </Button>
-              <Button size="icon" variant="ghost" onClick={() => remove(row.id as string)}>
+              <Button size="icon" variant="ghost" onClick={() => remove(row["id"] as string)}>
                 <Trash2 />
               </Button>
             </div>
@@ -110,7 +110,7 @@ export function CrudTable({
       <Dialog open={!!editing} onOpenChange={(o) => !o && setEditing(null)}>
         <DialogContent className="max-h-[90vh] max-w-lg overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editing?.id ? "تعديل" : "إضافة جديد"}</DialogTitle>
+            <DialogTitle>{editing?.["id"] ? "تعديل" : "إضافة جديد"}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             {fields.map((f) => (

@@ -25,7 +25,7 @@ const METHODS = ["الدفع عند الاستلام", "تحويل فودافو�
 function Checkout() {
   const { items, total, clear } = useCart();
   const [form, setForm] = useState({ full_name: "", phone: "", governorate: "", city: "", address: "" });
-  const [method, setMethod] = useState(METHODS[0]);
+  const [method, setMethod] = useState<string>("الدفع عند الاستلام");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ number: number; items: CartItem[]; total: number } | null>(null);
 
@@ -44,7 +44,7 @@ function Checkout() {
       );
     }
     setBusy(false);
-    if (error) return toast.error("تعذّر إرسال الطلب");
+    if (error) { toast.error("تعذّر إرسال الطلب"); return; }
     const number = 1000 + Math.floor(Math.random() * 9000);
     setDone({ number, items, total });
     clear();
