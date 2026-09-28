@@ -132,17 +132,12 @@ function RootComponent() {
     return () => sub.subscription.unsubscribe();
   }, [router, queryClient]
 return (
-<QueryClientProvider client={queryClient}>
-  <script
-  async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3943242431032372"
-  crossOrigin="anonymous"
-></script>
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">
-            {/* Required: nested routes render here. */}
-            <Outlet />
+    <QueryClientProvider client={queryClient}>
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">
+          {/* Required: nested routes render here. */}
+          <Outlet />
           </main>
           <Footer />
         </div>
