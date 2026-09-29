@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle, ArrowLeft, ShoppingBag, Film, Megaphone, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { AdSlot } from "@/components/site/AdSlot";
 import { ProductCard } from "@/components/site/ProductCard";
 import { MovieCard } from "@/components/site/MovieCard";
 import { ServiceCard } from "@/components/site/ServiceCard";
