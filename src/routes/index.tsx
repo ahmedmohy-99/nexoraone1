@@ -154,6 +154,13 @@ function Home() {
         </div>
       </section>
 
+      {/* مساحة إعلانية */}
+      <div className="mx-auto max-w-6xl px-4">
+        <AdSlot className="glass-card overflow-hidden rounded-xl p-2" />
+      </div>
+
+
+
       {/* MOVIES */}
       <section className="mx-auto max-w-6xl px-4 py-16">
         <SectionHeading
