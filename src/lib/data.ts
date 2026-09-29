@@ -42,6 +42,7 @@ export type PortfolioItem = {
 
 export const PRODUCT_CATEGORIES = [
   "الكل",
+  "ملابس",
   "إلكترونيات",
   "إكسسوارات",
   "أجهزة",
