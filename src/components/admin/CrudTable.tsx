@@ -75,11 +75,15 @@ export function CrudTable({
   async function upload(file: File, key: string) {
     setUploading(true);
     const path = `${table}/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "")}`;
-    const { error } = await supabase.storage.from("media").upload(path, file);
+    const { error } = await supabase.storage.from("media").upload(path, file, { contentType: file.type });
+    if (error) { setUploading(false); toast.error("تعذّر رفع الصورة: " + error.message); return; }
+    const { data, error: urlErr } = await supabase.storage
+      .from("media")
+      .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
     setUploading(false);
-    if (error) { toast.error("تعذّر رفع الصورة"); return; }
-    const { data } = supabase.storage.from("media").getPublicUrl(path);
-    setEditing((e) => ({ ...(e ?? {}), [key]: data.publicUrl }));
+    if (urlErr || !data) { toast.error("تعذّر تجهيز رابط الصورة"); return; }
+    setEditing((e) => ({ ...(e ?? {}), [key]: data.signedUrl }));
+    toast.success("تم رفع الصورة");
   }
 
   return (
