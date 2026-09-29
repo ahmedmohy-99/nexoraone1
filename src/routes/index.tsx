@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MessageCircle, ArrowLeft, ShoppingBag, Film, Megaphone, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { AdSlot } from "@/components/site/AdSlot";
 import { ProductCard } from "@/components/site/ProductCard";
 import { MovieCard } from "@/components/site/MovieCard";
 import { ServiceCard } from "@/components/site/ServiceCard";
@@ -153,6 +154,13 @@ function Home() {
           </Button>
         </div>
       </section>
+
+      {/* مساحة إعلانية */}
+      <div className="mx-auto max-w-6xl px-4">
+        <AdSlot className="glass-card overflow-hidden rounded-xl p-2" />
+      </div>
+
+
 
       {/* MOVIES */}
       <section className="mx-auto max-w-6xl px-4 py-16">
