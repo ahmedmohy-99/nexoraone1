@@ -35,10 +35,10 @@ export const getSpeedegyItems = createServerFn({ method: "GET" })
       const price = p.match(/([\d,.]+)\s*ج\.م/);
       const src = img?.[1] ?? "";
       items.push({
-        id: url[2],
-        url: url[1],
-        title: title ? clean(title[1]) : "",
-        type: type ? clean(type[1]).replace(/^[^\p{L}]+/u, "") : "",
+        id: url[2] ?? "",
+        url: url[1] ?? "",
+        title: title ? clean(title[1] ?? "") : "",
+        type: type ? clean(type[1] ?? "").replace(/^[^\p{L}]+/u, "") : "",
         price: price ? `${price[1]} ج.م` : "",
         image: src.startsWith("http") ? src : `${BASE}${src}`,
       });
