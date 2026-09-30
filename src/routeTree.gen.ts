@@ -15,6 +15,7 @@ import { Route as AdsRouteImport } from './routes/ads'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ClothesRouteImport } from './routes/clothes'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MoviesRouteImport } from './routes/movies'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
@@ -50,6 +51,11 @@ const CartRoute = CartRouteImport.update({
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClothesRoute = ClothesRouteImport.update({
+  id: '/clothes',
+  path: '/clothes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
   '/portfolio': typeof PortfolioRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
   '/portfolio': typeof PortfolioRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
   '/portfolio': typeof PortfolioRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/checkout'
+    | '/clothes'
     | '/contact'
     | '/movies'
     | '/portfolio'
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/checkout'
+    | '/clothes'
     | '/contact'
     | '/movies'
     | '/portfolio'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/cart'
     | '/checkout'
+    | '/clothes'
     | '/contact'
     | '/movies'
     | '/portfolio'
@@ -185,6 +197,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  ClothesRoute: typeof ClothesRoute
   ContactRoute: typeof ContactRoute
   MoviesRoute: typeof MoviesRoute
   PortfolioRoute: typeof PortfolioRoute
@@ -234,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clothes': {
+      id: '/clothes'
+      path: '/clothes'
+      fullPath: '/clothes'
+      preLoaderRoute: typeof ClothesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  ClothesRoute: ClothesRoute,
   ContactRoute: ContactRoute,
   MoviesRoute: MoviesRoute,
   PortfolioRoute: PortfolioRoute,
