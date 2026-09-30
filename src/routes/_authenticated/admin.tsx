@@ -61,6 +61,8 @@ function AdminPage() {
               { key: "discount_price", label: "السعر بعد الخصم", type: "number" },
               { key: "rating", label: "التقييم (من 5)", type: "number" },
               { key: "stock", label: "المخزون", type: "number" },
+              { key: "sizes", label: "المقاسات المتوفرة (افصل بفاصلة: S, M, L, XL)" },
+              { key: "colors", label: "الألوان المتوفرة (افصل بفاصلة: أسود, أبيض, أزرق)" },
             ]}
           />
         </TabsContent>

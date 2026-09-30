@@ -14,6 +14,13 @@ import type { Product } from "@/lib/data";
 import { egp, effectivePrice } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 
+function splitList(value?: string | null) {
+  return (value ?? "")
+    .split(/[,،]/)
+    .map((v) => v.trim())
+    .filter(Boolean);
+}
+
 export function ProductCard({ product }: { product: Product }) {
   const { add } = useCart();
   const navigate = useNavigate();
@@ -22,10 +29,69 @@ export function ProductCard({ product }: { product: Product }) {
   const hasDiscount = price < Number(product.price);
   const soldOut = product.stock <= 0;
 
+  const sizes = splitList(product.sizes);
+  const colors = splitList(product.colors);
+  const [size, setSize] = useState<string | null>(null);
+  const [color, setColor] = useState<string | null>(null);
+
   function addToCart() {
-    add({ id: product.id, name: product.name, image_url: product.image_url, price });
+    if (sizes.length && !size) {
+      toast.error("اختر المقاس أولاً");
+      return false;
+    }
+    if (colors.length && !color) {
+      toast.error("اختر اللون أولاً");
+      return false;
+    }
+    const extra = [size, color].filter(Boolean).join(" - ");
+    add({
+      id: [product.id, size, color].filter(Boolean).join("|"),
+      name: extra ? `${product.name} (${extra})` : product.name,
+      image_url: product.image_url,
+      price,
+    });
     toast.success("تمت إضافة المنتج إلى السلة");
+    return true;
   }
+
+  const options = (
+    <div className="mt-4 space-y-3">
+      {sizes.length ? (
+        <div>
+          <p className="mb-2 text-xs font-bold">المقاس</p>
+          <div className="flex flex-wrap gap-2">
+            {sizes.map((s) => (
+              <Button
+                key={s}
+                size="sm"
+                variant={size === s ? "hero" : "glass"}
+                onClick={() => setSize(s)}
+              >
+                {s}
+              </Button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {colors.length ? (
+        <div>
+          <p className="mb-2 text-xs font-bold">اللون</p>
+          <div className="flex flex-wrap gap-2">
+            {colors.map((c) => (
+              <Button
+                key={c}
+                size="sm"
+                variant={color === c ? "hero" : "glass"}
+                onClick={() => setColor(c)}
+              >
+                {c}
+              </Button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
 
   return (
     <>
@@ -65,6 +131,7 @@ export function ProductCard({ product }: { product: Product }) {
           <p className={`mt-1 text-xs ${soldOut ? "text-destructive" : "text-success"}`}>
             {soldOut ? "غير متوفر حالياً" : `متوفر (${product.stock} قطعة)`}
           </p>
+          {options}
           <div className="mt-5 grid gap-2">
             <div className="grid grid-cols-2 gap-2">
               <Button variant="hero" disabled={soldOut} onClick={addToCart}>
@@ -75,8 +142,7 @@ export function ProductCard({ product }: { product: Product }) {
                 variant="glass"
                 disabled={soldOut}
                 onClick={() => {
-                  addToCart();
-                  navigate({ to: "/checkout" });
+                  if (addToCart()) navigate({ to: "/checkout" });
                 }}
               >
                 <Zap />
@@ -114,6 +180,7 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             ) : null}
           </div>
+          {options}
           <Button variant="hero" disabled={soldOut} onClick={addToCart}>
             <ShoppingCart />
             أضف إلى السلة
