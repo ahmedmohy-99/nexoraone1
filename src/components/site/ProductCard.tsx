@@ -131,6 +131,7 @@ export function ProductCard({ product }: { product: Product }) {
           <p className={`mt-1 text-xs ${soldOut ? "text-destructive" : "text-success"}`}>
             {soldOut ? "غير متوفر حالياً" : `متوفر (${product.stock} قطعة)`}
           </p>
+          {options}
           <div className="mt-5 grid gap-2">
             <div className="grid grid-cols-2 gap-2">
               <Button variant="hero" disabled={soldOut} onClick={addToCart}>
@@ -141,8 +142,7 @@ export function ProductCard({ product }: { product: Product }) {
                 variant="glass"
                 disabled={soldOut}
                 onClick={() => {
-                  addToCart();
-                  navigate({ to: "/checkout" });
+                  if (addToCart()) navigate({ to: "/checkout" });
                 }}
               >
                 <Zap />
@@ -180,6 +180,7 @@ export function ProductCard({ product }: { product: Product }) {
               </span>
             ) : null}
           </div>
+          {options}
           <Button variant="hero" disabled={soldOut} onClick={addToCart}>
             <ShoppingCart />
             أضف إلى السلة
