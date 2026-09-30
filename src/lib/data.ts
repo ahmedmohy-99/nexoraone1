@@ -11,6 +11,8 @@ export type Product = {
   discount_price: number | null;
   rating: number;
   stock: number;
+  sizes?: string | null;
+  colors?: string | null;
 };
 
 export type Movie = {

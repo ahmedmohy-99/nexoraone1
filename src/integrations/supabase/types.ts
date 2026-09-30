@@ -190,6 +190,7 @@ export type Database = {
       products: {
         Row: {
           category: string
+          colors: string
           created_at: string
           description: string
           discount_price: number | null
@@ -198,10 +199,12 @@ export type Database = {
           name: string
           price: number
           rating: number
+          sizes: string
           stock: number
         }
         Insert: {
           category?: string
+          colors?: string
           created_at?: string
           description?: string
           discount_price?: number | null
@@ -210,10 +213,12 @@ export type Database = {
           name: string
           price?: number
           rating?: number
+          sizes?: string
           stock?: number
         }
         Update: {
           category?: string
+          colors?: string
           created_at?: string
           description?: string
           discount_price?: number | null
@@ -222,6 +227,7 @@ export type Database = {
           name?: string
           price?: number
           rating?: number
+          sizes?: string
           stock?: number
         }
         Relationships: []
