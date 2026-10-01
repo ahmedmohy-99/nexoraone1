@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { getSpeedegyItems } from "@/lib/speedegy.functions";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/clothes")({
   head: () => ({
@@ -20,9 +22,15 @@ export const Route = createFileRoute("/clothes")({
   component: ClothesPage,
 });
 
+function parsePrice(price: string): number {
+  const n = Number(price.replace(/[^\d.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
 function ClothesPage() {
   const [page, setPage] = useState(1);
   const fetchItems = useServerFn(getSpeedegyItems);
+  const { add } = useCart();
   const { data, isLoading } = useQuery({
     queryKey: ["speedegy", page],
     queryFn: () => fetchItems({ data: { page } }),
@@ -39,13 +47,7 @@ function ClothesPage() {
       ) : (
         <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {data.items.map((it) => (
-            <a
-              key={it.id}
-              href={it.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass card-hover overflow-hidden rounded-3xl"
-            >
+            <div key={it.id} className="glass card-hover overflow-hidden rounded-3xl">
               <div className="bg-secondary/40 aspect-square overflow-hidden">
                 <img src={it.image} alt={it.title} loading="lazy" className="size-full object-cover" />
               </div>
@@ -53,8 +55,23 @@ function ClothesPage() {
                 <h3 className="line-clamp-1 font-bold">{it.title}</h3>
                 <p className="text-muted-foreground text-xs">{it.type}</p>
                 <p className="text-primary mt-2 font-extrabold">{it.price}</p>
+                <Button
+                  className="mt-3 w-full"
+                  size="sm"
+                  onClick={() => {
+                    add({
+                      id: `speedegy-${it.id}`,
+                      name: it.title,
+                      image_url: it.image,
+                      price: parsePrice(it.price),
+                    });
+                    toast.success("تمت الإضافة إلى السلة");
+                  }}
+                >
+                  أضف إلى السلة
+                </Button>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       )}
@@ -63,6 +80,10 @@ function ClothesPage() {
         <span className="text-sm">{page} / {data?.lastPage ?? "…"}</span>
         <Button variant="glass" disabled={!!data && page >= data.lastPage} onClick={() => setPage(page + 1)}>التالي</Button>
       </div>
+      <p className="text-muted-foreground mt-8 text-center text-sm">
+        أضف القطع للسلة وأكمل طلبك من هنا — {" "}
+        <Link to="/cart" className="text-primary underline">الذهاب إلى السلة</Link>
+      </p>
     </div>
   );
 }
