@@ -13,6 +13,7 @@ const links = [
   { to: "/", label: "الرئيسية" },
   { to: "/store", label: "المتجر" },
   { to: "/clothes", label: "الملابس" },
+  { to: "/offers", label: "عروض أمازون" },
   { to: "/movies", label: "أفلام" },
   { to: "/ads", label: "الإعلانات" },
   { to: "/portfolio", label: "معرض الأعمال" },
