@@ -18,6 +18,7 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ClothesRouteImport } from './routes/clothes'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as MoviesRouteImport } from './routes/movies'
+import { Route as OffersRouteImport } from './routes/offers'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as RequestRouteImport } from './routes/request'
 import { Route as StoreRouteImport } from './routes/store'
@@ -68,6 +69,11 @@ const MoviesRoute = MoviesRouteImport.update({
   path: '/movies',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OffersRoute = OffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortfolioRoute = PortfolioRouteImport.update({
   id: '/portfolio',
   path: '/portfolio',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
+  '/offers': typeof OffersRoute
   '/portfolio': typeof PortfolioRoute
   '/request': typeof RequestRoute
   '/store': typeof StoreRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
+  '/offers': typeof OffersRoute
   '/portfolio': typeof PortfolioRoute
   '/request': typeof RequestRoute
   '/store': typeof StoreRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/clothes': typeof ClothesRoute
   '/contact': typeof ContactRoute
   '/movies': typeof MoviesRoute
+  '/offers': typeof OffersRoute
   '/portfolio': typeof PortfolioRoute
   '/request': typeof RequestRoute
   '/store': typeof StoreRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/clothes'
     | '/contact'
     | '/movies'
+    | '/offers'
     | '/portfolio'
     | '/request'
     | '/store'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/clothes'
     | '/contact'
     | '/movies'
+    | '/offers'
     | '/portfolio'
     | '/request'
     | '/store'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/clothes'
     | '/contact'
     | '/movies'
+    | '/offers'
     | '/portfolio'
     | '/request'
     | '/store'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   ClothesRoute: typeof ClothesRoute
   ContactRoute: typeof ContactRoute
   MoviesRoute: typeof MoviesRoute
+  OffersRoute: typeof OffersRoute
   PortfolioRoute: typeof PortfolioRoute
   RequestRoute: typeof RequestRoute
   StoreRoute: typeof StoreRoute
@@ -270,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/offers': {
+      id: '/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof OffersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/portfolio': {
       id: '/portfolio'
       path: '/portfolio'
@@ -331,6 +351,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClothesRoute: ClothesRoute,
   ContactRoute: ContactRoute,
   MoviesRoute: MoviesRoute,
+  OffersRoute: OffersRoute,
   PortfolioRoute: PortfolioRoute,
   RequestRoute: RequestRoute,
   StoreRoute: StoreRoute,
