@@ -64,6 +64,7 @@ function OffersPage() {
                   src={it.image}
                   alt={it.title}
                   loading="lazy"
+                  referrerPolicy="no-referrer"
                   className="max-h-full object-contain transition-transform group-hover:scale-105"
                 />
               </div>
