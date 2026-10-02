@@ -52,7 +52,7 @@ export const getAmazonBestSellers = createServerFn({ method: "GET" })
         const asin = b.match(/\/dp\/([A-Z0-9]{10})/)?.[1];
         if (!asin || seen.has(asin)) continue;
         seen.add(asin);
-        const img = b.match(/<img[^>]*src="(https:\/\/[^"]+media-amazon[^"]+)"/);
+        const img = b.match(/<img[^>]*src="(https:\/\/[^"]*amazon[^"]+\.(?:jpg|png|webp)[^"]*)"/);
         const title =
           b.match(/line-clamp[^"]*"[^>]*>([^<]{4,300})<\/div>/)?.[1] ??
           b.match(/<img[^>]*alt="([^"]+)"/)?.[1] ??
