@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { ProductCard } from "@/components/site/ProductCard";
 import { PRODUCT_CATEGORIES, useProducts } from "@/lib/data";
+import { getSpeedegyItems } from "@/lib/speedegy.functions";
+import { getAmazonBestSellers } from "@/lib/amazon.functions";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/store")({
   validateSearch: (search: Record<string, unknown>): { q?: string } => (typeof search["q"] === "string" ? { q: search["q"] } : {}),
