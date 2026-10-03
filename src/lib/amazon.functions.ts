@@ -44,7 +44,8 @@ export const getAmazonBestSellers = createServerFn({ method: "GET" })
       });
       if (!res.ok) return { items: [] };
       const html = await res.text();
-      const blocks = html.split("zg-grid-general-faceout").slice(1);
+      let blocks = html.split('id="gridItemRoot"').slice(1);
+      if (blocks.length === 0) blocks = html.split("zg-grid-general-faceout").slice(1);
       const items: AmazonItem[] = [];
       const seen = new Set<string>();
       for (const raw of blocks) {
