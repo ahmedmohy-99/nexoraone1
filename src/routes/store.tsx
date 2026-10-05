@@ -28,11 +28,21 @@ export const Route = createFileRoute("/store")({
   component: StorePage,
 });
 
+const OFFERS = "عروض";
+const CLOTHES = "الملابس";
+
 function StorePage() {
   const { q } = Route.useSearch();
   const { data, isLoading } = useProducts();
   const [term, setTerm] = useState(q ?? "");
   const [category, setCategory] = useState<string>("الكل");
+
+  const chips = [
+    "الكل",
+    OFFERS,
+    CLOTHES,
+    ...PRODUCT_CATEGORIES.filter((c) => c !== "الكل" && c !== "ملابس"),
+  ];
 
   const products = (data ?? []).filter((p) => {
     const matchCat = category === "الكل" || p.category === category;
