@@ -79,8 +79,12 @@ function StorePage() {
           ))}
         </div>
       )}
-      <ClothesSection />
-      <AmazonSection />
+      {category === "الكل" && !term.trim() ? (
+        <>
+          <ClothesSection />
+          <AmazonSection />
+        </>
+      ) : null}
     </div>
   );
 }
