@@ -65,7 +65,7 @@ function StorePage() {
           className="mx-auto max-w-xl"
         />
         <div className="flex flex-wrap justify-center gap-2">
-          {PRODUCT_CATEGORIES.map((c) => (
+          {chips.map((c) => (
             <Button
               key={c}
               size="sm"
