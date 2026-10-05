@@ -108,7 +108,7 @@ function parsePrice(price: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-function ClothesSection() {
+function ClothesSection({ limit = 8, standalone = false }: { limit?: number; standalone?: boolean }) {
   const fetchItems = useServerFn(getSpeedegyItems);
   const { add } = useCart();
   const { data } = useQuery({
@@ -116,10 +116,10 @@ function ClothesSection() {
     queryFn: () => fetchItems({ data: { page: 1 } }),
     staleTime: 5 * 60 * 1000,
   });
-  const items = data?.items.slice(0, 8) ?? [];
+  const items = data?.items.slice(0, limit) ?? [];
   if (!items.length) return null;
   return (
-    <div className="glass mt-20 rounded-3xl p-4 sm:p-6">
+    <div className={`glass ${standalone ? "mt-10" : "mt-20"} rounded-3xl p-4 sm:p-6`}>
       <SectionHeading title="الملابس" subtitle="أحدث التصميمات — تتحدث تلقائيًا" />
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {items.map((it) => (
@@ -148,17 +148,17 @@ function ClothesSection() {
   );
 }
 
-function AmazonSection() {
+function AmazonSection({ limit = 8, standalone = false }: { limit?: number; standalone?: boolean }) {
   const fetchItems = useServerFn(getAmazonBestSellers);
   const { data } = useQuery({
     queryKey: ["amazon", "fashion"],
     queryFn: () => fetchItems({ data: { category: "fashion" } }),
     staleTime: 10 * 60 * 1000,
   });
-  const items = data?.items.slice(0, 8) ?? [];
+  const items = data?.items.slice(0, limit) ?? [];
   if (!items.length) return null;
   return (
-    <div className="glass mt-8 rounded-3xl p-4 sm:p-6">
+    <div className={`glass ${standalone ? "mt-10" : "mt-8"} rounded-3xl p-4 sm:p-6`}>
       <SectionHeading title="عروض" subtitle="الأكثر مبيعًا — يتحدث تلقائيًا" />
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {items.map((it) => (
