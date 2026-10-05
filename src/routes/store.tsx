@@ -101,7 +101,7 @@ function ClothesSection() {
   const items = data?.items.slice(0, 8) ?? [];
   if (!items.length) return null;
   return (
-    <div className="mt-20">
+    <div className="glass mt-20 rounded-3xl p-4 sm:p-6">
       <SectionHeading title="الملابس" subtitle="أحدث التصميمات — تتحدث تلقائيًا" />
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {items.map((it) => (
@@ -140,8 +140,8 @@ function AmazonSection() {
   const items = data?.items.slice(0, 8) ?? [];
   if (!items.length) return null;
   return (
-    <div className="mt-20">
-      <SectionHeading title="عروض أمازون" subtitle="الأكثر مبيعًا — يتحدث تلقائيًا" />
+    <div className="glass mt-8 rounded-3xl p-4 sm:p-6">
+      <SectionHeading title="عروض" subtitle="الأكثر مبيعًا — يتحدث تلقائيًا" />
       <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {items.map((it) => (
           <a
