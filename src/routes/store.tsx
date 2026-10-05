@@ -78,7 +78,11 @@ function StorePage() {
         </div>
       </div>
 
-      {isLoading ? (
+      {category === OFFERS ? (
+        <AmazonSection limit={16} standalone />
+      ) : category === CLOTHES ? (
+        <ClothesSection limit={16} standalone />
+      ) : isLoading ? (
         <p className="text-muted-foreground mt-12 text-center">جارٍ تحميل المنتجات...</p>
       ) : products.length === 0 ? (
         <p className="text-muted-foreground mt-12 text-center">لا توجد منتجات مطابقة.</p>
@@ -91,8 +95,8 @@ function StorePage() {
       )}
       {category === "الكل" && !term.trim() ? (
         <>
-          <ClothesSection />
           <AmazonSection />
+          <ClothesSection />
         </>
       ) : null}
     </div>
